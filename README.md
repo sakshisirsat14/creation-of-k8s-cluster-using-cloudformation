@@ -74,8 +74,18 @@ PublicID of Master Node
 PrivateID of Worker Node                                                                                 
 
 
+* Contribution
+
+Fork the repo.                                                       
+Create a branch.                                                                               
+Commit changes.                                                                                    
+Push to branch.                                                                                  
+Open a Pull Request.                                                              
 
 
+* License
+
+Licensed under the MIT License. See LICENSE for details.
 
 
 
