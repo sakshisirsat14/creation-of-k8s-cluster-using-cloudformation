@@ -2,7 +2,7 @@
 # Creation of Cluster using CloudFormation
 This repository contains AWS CloudFormation templates for creating and managing clusters. 
 The templates can be used to provision clusters in AWS.
-# Architecture : ![Cluster Image](images/cluster.png)
+# Architecture : ![Cluster Image](images/cluster.png.pdf)
 
 ## Table of Contents :
 
