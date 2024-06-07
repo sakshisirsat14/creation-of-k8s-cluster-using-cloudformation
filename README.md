@@ -33,4 +33,82 @@ This project provides a set of AWS CloudFormation templates to create and manage
 
 
 
-Installation
+* Installation
+
+Git clone https://github.com/yourusername/creation-of-cluster-using-cloudformation.git
+cd creation-of-cluster-using-cloudformation
+
+
+* Usage
+
+
+1. Access resources via CloudFormation outputs.
+2. Can customize parameters in the template.
+3. Deploy stack.
+4. Monitor creation.
+
+
+
+* Templates
+
+Template.yaml - Custom cluster
+
+
+* Parameters
+
+
+ 
+VpcId                 -             VPC ID	                                                                              
+SubnetIds             -             Comma-separated list of subnet IDs.                                                                                  
+ClusterName           - 	          Cluster name	                                                                
+InstanceType	        -             EC2 instance                                                            
+KeyName	              -             SSH key pairname	                                                             
+
+
+* Outputs                                                                                                     
+
+
+ClusterId	                                                                                                      
+ClusterEndpoint	                                                                                                    
+PublicID of Master Node                                                                      
+PrivateID of Worker Node                                                                                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
