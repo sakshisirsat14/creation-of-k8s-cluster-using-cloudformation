@@ -1,0 +1,58 @@
+ 
+ 
+1. kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.0/aio/deploy/recommended.yaml   
+    [RUN on Master ONLY]
+    
+       
+2. vim ServiceAccount.yml
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+  
+kubectl apply -f ServiceAccount.yml
+  
+       
+        
+3. vim manifestfilename.yml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: admin-user
+    namespace: kubernetes-dashboard
+    
+kubectl apply -f manifestfilename.yml
+     
+            
+      
+4. kubectl -n kubernetes-dashboard create token admin-user [run on master]
+    
+[::::: Open  New system terminal (CTRL+ALT+T) and paste below command to create tunnel,insert masters ip and keyname at respective place :::::]
+
+ssh -i ["key-k8s.pem"] -L 8001:localhost:8001 -N [ubuntu@ec2-100-24-34-47.compute-1.amazonaws.com] -o ExitOnForwardFailure=yes        
+    
+
+    :::::::{run the below cmd on master}:::::::::::
+
+      
+5. kubectl create serviceaccount dashboard -n default   
+
+6. kubectl create clusterrolebinding dashboard-admin -n default --clusterrole=cluster-admin–serviceaccount=default:dashboard  
+    
+7. kubectl get secret $(kubectl get serviceaccount dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
+       
+8. kubectl proxy   
+
+9. http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+
+[::::::::::PASTE THE ABOVE LINK IN BROWSER:::::::::
