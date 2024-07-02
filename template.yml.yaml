@@ -19,6 +19,9 @@ Parameters:
     Type: Number
     Default: 20
     MinValue: 8
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
+    Type: AWS::EC2::KeyPair::KeyName
 
 Resources:
   MasterNodeKubernetesSG:
@@ -58,7 +61,7 @@ Resources:
           ToPort: 10252
       Tags: 
         - Key: Name
-          Value: Kuberentes SG Master Node
+          Value: Kubernetes SG Master Node
 
   WorkerNodeKubernetesSG:
     Type: AWS::EC2::SecurityGroup
@@ -82,16 +85,15 @@ Resources:
           ToPort: 32767
       Tags: 
         - Key: Name
-          Value: Kuberentes SG Worker Node
+          Value: Kubernetes SG Worker Node
 
   WorkerNode:
-    DependsOn: WorkerNodeKubernetesSG
     Type: AWS::EC2::Instance
     Properties: 
       ImageId: !Ref ImageAMIId
       InstanceInitiatedShutdownBehavior: terminate
       InstanceType: !Ref InstanceType
-      KeyName: Ant
+      KeyName: !Ref KeyName
       UserData:
         Fn::Base64: !Sub |
             #!/bin/bash -xe
@@ -113,13 +115,12 @@ Resources:
             DeleteOnTermination: true
 
   MasterNode:
-    DependsOn: MasterNodeKubernetesSG
     Type: AWS::EC2::Instance
     Properties: 
       ImageId: !Ref ImageAMIId
       InstanceInitiatedShutdownBehavior: terminate
       InstanceType: !Ref InstanceType
-      KeyName: Ant
+      KeyName: !Ref KeyName
       UserData:
         Fn::Base64: !Sub |
             #!/bin/bash -xe
@@ -153,3 +154,4 @@ Outputs:
   WorkerNodeConnectSSH:
     Description: SSH into Worker Node
     Value: !Sub ssh -i "pc-ssh.pem" ubuntu@${WorkerNode.PublicDnsName}
+
