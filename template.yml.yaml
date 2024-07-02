@@ -22,6 +22,7 @@ Parameters:
   KeyName:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
     Type: AWS::EC2::KeyPair::KeyName
+    Default: Ant # Change this to the name of your newly created KeyPair
 
 Resources:
   MasterNodeKubernetesSG:
@@ -154,4 +155,5 @@ Outputs:
   WorkerNodeConnectSSH:
     Description: SSH into Worker Node
     Value: !Sub ssh -i "pc-ssh.pem" ubuntu@${WorkerNode.PublicDnsName}
+
 
